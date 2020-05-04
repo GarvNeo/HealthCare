@@ -1,5 +1,6 @@
 package com.capg.healthcare.service;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,37 +19,18 @@ import com.capg.healthcare.entity.Appointment;
 import com.capg.healthcare.repository.IAppointmentRepository;
 
 @Service
-public class AppointmentService {
+public class AppointmentService implements IAppointmentService{
 
-	@Autowired
-	private IAppointmentRepository iAppointmentRepository;
-	
+//	@Autowired
+//	private IAppointmentRepository iAppointmentRepository;
+//	
 	@Autowired
 	private AppointmentDAOService appointmentDAOService; 
 	
 	private static final Logger log =
 			LoggerFactory.getLogger(AppointmentCLR.class);
 
-	
-	public List<Appointment> getAllAppointments() {
-		List<Appointment> pList=new ArrayList<Appointment>();
-		iAppointmentRepository.findAll().forEach(appointment -> pList.add(appointment));
-		return pList;
-	}
-	
-	public Appointment saveAppointments(Appointment app) {
-		
-		//java.sql.Timestamp ts = AppointmentController.getCurrentTimeStamp();
-		//Appointment appointment = new Appointment("U12",ts,"D4C12","D4CT25",0);
-		
-		return iAppointmentRepository.save(app);
-		//log.info("A new appointment has been made"+app);
-//		
-//		List<Appointment> appointments =iAppointmentRepository.findAll();
-//		log.info("All appntmnts "+ appointments);
-	//	return appointments;
-		
-	}
+	/**************************************** Making of appointment***************************** ***************************/
 	
 	public Appointment saveAppointmentss(Appointment app) {
 		
@@ -63,7 +45,38 @@ public class AppointmentService {
 		}
 	}
 
-	/*Checking whether slot is available or not */
+	/******************************Making a search or updation ***************************/
+	
+
+	public Appointment appointmentSearchUpdateById(Appointment new_appointment,String choice)
+	{
+		List<Appointment> appointment = appointmentDAOService.showAppointments();
+		
+		for(Appointment old_appointment : appointment)
+		{
+			if(old_appointment.getAppointmentId().equals(new_appointment.getAppointmentId()))
+			{
+				if (choice.equals("Search") )
+				{
+					return old_appointment;	
+				}
+				else if(choice.equals("Update"))
+				{
+					old_appointment.setCenterId(new_appointment.getCenterId());
+					old_appointment.setDateTime(new_appointment.getDateTime());
+					old_appointment.setStatus(new_appointment.getStatus());
+					old_appointment.setTestId(new_appointment.getTestId());
+					old_appointment.setUserId(new_appointment.getUserId());
+					
+					return  appointmentDAOService.saveAppointments(old_appointment);
+				}
+			}
+		}
+		return null;
+	}
+	
+	
+	/******************************Checking whether slot is available or not ***************************/
 	
 	public boolean checkSlotAvailibility(Timestamp dateTimeCurrent)
 	{
@@ -79,12 +92,21 @@ public class AppointmentService {
 		}
 		return true;
 	}
+
 	
-	/*Fetching of complete list */
+
+	/*********************************Fetching of complete list **************************************************/
 	
 	public List<Appointment> showAllAppointments()
 	{	
 		return appointmentDAOService.showAppointments();
+	}
+	
+	/*********************************Deleting of complete list **************************************************/
+	
+	public int cancelAppointmentById( BigInteger app_id)
+	{	
+		return appointmentDAOService.cancelAppointmentById(app_id);
 	}
 	
 

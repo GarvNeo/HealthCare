@@ -17,7 +17,7 @@ import com.capg.healthcare.repository.IAppointmentRepository;
 
 
 @Component
-public class AppointmentDAOService {
+public class AppointmentDAOService implements  IAppointmentDAO{
 
 	@Autowired
 	private IAppointmentRepository iAppointmentRepository;
@@ -39,4 +39,10 @@ public class AppointmentDAOService {
 		return app;
 	}
     
+    /* Deleting an appointment */
+	
+    public int cancelAppointmentById( BigInteger app_id)
+	{	
+		return iAppointmentRepository.deleteAppointment(app_id);
+	}
 }

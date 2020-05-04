@@ -30,7 +30,7 @@ public class AppointmentCLR implements CommandLineRunner{
 		java.util.Date today = new java.util.Date();
 		return new java.sql.Timestamp(today.getTime());
 	}
-	 
+	/* Just for checking */
 	@Override
 	public void run(String... args) throws Exception {
 //		java.sql.Timestamp ts = AppointmentCLR.getCurrentTimeStamp();
