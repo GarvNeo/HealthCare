@@ -26,8 +26,6 @@ import com.capg.healthcare.service.AppointmentService;
 @RequestMapping("/api")
 public class AppointmentController {
 	
-	private static final Logger log =
-			LoggerFactory.getLogger(AppointmentCLR.class);
 	
 	@Autowired
 	private IAppointmentRepository iAppointmentRepository;
@@ -100,10 +98,8 @@ public class AppointmentController {
     	java.sql.Timestamp ts = AppointmentController.getCurrentTimeStamp() ;			
 		Appointment appointment = new Appointment("U14",ts,"Da4C12","D4CT25",0);
 		iAppointmentRepository.save(appointment);
-		log.info("A new appointment has been made"+appointment);
 		
 		List<Appointment> app =iAppointmentRepository.findAll();
-		log.info("All appntmnts "+ app);
 		return app;
 	}
 	

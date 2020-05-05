@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.capg.healthcare.controller.AppointmentCLR;
 import com.capg.healthcare.controller.AppointmentController;
 import com.capg.healthcare.dao.AppointmentDAOService;
 import com.capg.healthcare.entity.Appointment;
@@ -27,8 +26,6 @@ public class AppointmentService implements IAppointmentService{
 	@Autowired
 	private AppointmentDAOService appointmentDAOService; 
 	
-	private static final Logger log =
-			LoggerFactory.getLogger(AppointmentCLR.class);
 
 	/**************************************** Making of appointment***************************** ***************************/
 	
